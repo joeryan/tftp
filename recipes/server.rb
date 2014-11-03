@@ -47,7 +47,8 @@ when "debian", "ubuntu"
   package "tftpd-hpa"
 
   service "tftpd-hpa" do
-    supports :restart => true, :status => true, :reload => true
+    provider Chef::Provider::Service::Upstart
+    supports :restart => false, :status => true, :reload => false
     action [ :enable, :start ]
   end
 
