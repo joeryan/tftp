@@ -47,8 +47,12 @@ when "debian", "ubuntu"
   package "tftpd-hpa"
 
   service "tftpd-hpa" do
-    provider Chef::Provider::Service::Upstart
-    supports :restart => false, :status => true, :reload => false
+    if node["platform"] == "ubuntu"
+      provider Chef::Provider::Service::Upstart
+    else
+      provider Chef::Provider::Service::Init::Debian
+    end
+    supports :restart => true, :status => true, :reload => true
     action [ :enable, :start ]
   end
 
